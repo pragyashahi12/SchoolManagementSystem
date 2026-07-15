@@ -80,14 +80,19 @@ def sendEmail(request):
         message=request.POST.get("message")
         from_email="tcode837@gmail.com"
         recipient=[request.POST.get("to")]
-
-        send_mail(
+        try:
+         send_mail(
             subject,
             message,
             from_email,
             recipient,
             fail_silently=False,
-        )
+            auth_user="tcode837@gmail.com",
+            auth_password="srfllaoxvdecmtwe"
+         )
+        except BadHeaderError as e:
+            return HttpResponse("Invalid Header Found:", e)
+
         return HttpResponse("Email Sent Successfully!")
     else:
         return HttpResponse("Invalid Request Method")
