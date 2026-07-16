@@ -73,25 +73,24 @@ def delete_student(request, id):
     return render(request, "delete_student.html", {"student": student})
 def email_form(request):
     return render(request,"send-mail.html")
-
 def sendEmail(request):
     if request.method == "POST":
-        subject=request.POST.get("subject")
-        message=request.POST.get("message")
-        from_email="tcode837@gmail.com"
-        recipient=[request.POST.get("to")]
-        try:
-         send_mail(
-            subject,
-            message,
-            from_email,
-            recipient,
-            fail_silently=False,
-          
-         )
-        except BadHeaderError as e:
-            return HttpResponse("Invalid Header Found:", e)
+        subject = request.POST.get("subject")
+        message = request.POST.get("message")
+        recipient = [request.POST.get("to")]
 
-        return HttpResponse("Email Sent Successfully!")
-    else:
-        return HttpResponse("Invalid Request Method")
+        try:
+            send_mail(
+                subject,
+                message,
+                None,   # Uses DEFAULT_FROM_EMAIL
+                recipient,
+                fail_silently=False,
+            )
+            return HttpResponse("Email Sent Successfully!")
+
+        except Exception as e:
+            traceback.print_exc()
+            return HttpResponse(f"Error: {e}", status=500)
+
+    return HttpResponse("Invalid Request Method")
