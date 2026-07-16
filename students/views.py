@@ -87,8 +87,7 @@ def sendEmail(request):
             from_email,
             recipient,
             fail_silently=False,
-            auth_user="tcode837@gmail.com",
-            auth_password="srfllaoxvdecmtwe"
+          
          )
         except BadHeaderError as e:
             return HttpResponse("Invalid Header Found:", e)
