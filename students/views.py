@@ -85,7 +85,7 @@ def sendEmail(request):
                 message,
                 None,   # Uses DEFAULT_FROM_EMAIL
                 recipient,
-                fail_silently=False,
+                fail_silently=True,
             )
             return HttpResponse("Email Sent Successfully!")
 
